@@ -8,14 +8,15 @@ def get_iou(gts, segmentation, n_classes=4):
     i_iou, n_masks = 0, 0
     eps = np.finfo(float).eps   # minimum positive float value
     for i in range(n_classes):
-        gt, mask = gts[i,:,:].cpu(), segmentation[i,:,:].cpu().detach()
+        gt = gts[i,:,:].cpu().numpy()
+        segmentation = segmentation[i,:,:].cpu().detach().numpy()
         # skip current class if it doesn't appear in image
-        if torch.sum(gt) < eps:
+        if np.sum(gt) < eps:
             continue
 
-        intersection = torch.sum(mask * gt)
-        union = torch.ceil((mask + gt) / 2.0)
-        union = torch.sum(union)
+        intersection = np.sum(mask * gt)
+        union = np.ceil((mask + gt) / 2.0)
+        union = np.sum(union)
         if union > eps:
             iou = intersection / union
             i_iou += iou
