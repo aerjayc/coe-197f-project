@@ -32,7 +32,7 @@ class SemanticSegmentationDataset(Dataset):
         gt = self.gt_dict[img_name].transpose(2,0,1)    # C, H, W
         gt = torch.from_numpy(gt).long()
 
-        if cuda:
+        if self.cuda:
             img = img.cuda()
             gt = gt.cuda()
 
