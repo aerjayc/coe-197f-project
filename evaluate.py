@@ -91,7 +91,7 @@ def segment_objects(model, images, n_classes=4):
 
     segmentation = to_categorical(outputs, n_classes=n_classes)
 
-    return segmentation # boolean mask of shape (N,C,H,W)
+    return segmentation.long() # mask of shape (N,C,H,W)
 
 def evaluate(model, testloader, max_n_test=None, T_print=None):
     s_iou = 0
