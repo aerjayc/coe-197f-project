@@ -218,3 +218,13 @@ class features_pyramid(nn.Module):
             prev_conv = conv
 
         return outputs
+
+
+def build_resnet(input_shape=(480, 640, 3),
+                 n_layers=4,
+                 n=6):
+    depth = n * 9 + 2
+    
+    return resnet_v2(input_shape,
+                     depth=depth,
+                     n_layers=n_layers)
