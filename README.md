@@ -3,7 +3,10 @@
 This is a replication of the code from [here](https://github.com/PacktPublishing/Advanced-Deep-Learning-with-Keras/tree/master/chapter12-segmentation),
 as part of the requirements for CoE 197F. Thus, the function names,
 structure of the code, etc. are similar, except that this is a
-PyTorch implementation (as opposed to a Keras implementation).
+PyTorch implementation (as opposed to a Keras implementation). The jupyter
+notebook [`197F_project.ipynb`](197F_project.ipynb) shows how the functions
+are used. Note that the actual training isn't shown, as it wasn't done in one
+go. However, the saved [weights](weights/resnet_v2-300epochs.pth) from the training is used.
 
 
 ## Model
@@ -49,3 +52,31 @@ accuracy metrics. The results are as follows:
 
 The following figures show the performance of the trained model on the test
 dataset. These sets of images were randomly selected (to avoid cherry picking).
+The derivation of these results can be seen in the jupyter notebook.
+
+
+### Image / Ground Truth / Output 1
+
+IoU: `0.7417`
+PLA: `66.68%`
+![Image 1](images/img1.png)
+![Ground Truth 1](images/gt1.png)
+![Segmentation 1](images/seg1.png)
+
+
+### Image / Ground Truth / Output 2
+
+IoU: `0.8142`
+PLA: `72.73%`
+![Image 2](images/img2.png)
+![Ground Truth 2](images/gt2.png)
+![Segmentation 2](images/seg2.png)
+
+
+### Image / Ground Truth / Output 3
+
+IoU: `0.7961`
+PLA: `62.23%`
+![Image 3](images/img3.png)
+![Ground Truth 3](images/gt3.png)
+![Segmentation 3](images/seg3.png)
