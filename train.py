@@ -1,8 +1,6 @@
+from model_utils import restore_weights, save_model
 from resnet import build_resnet
 from model import fcn
-from model_utils import lr_scheduler, restore_weights, save_model
-from evaluate import evaluate
-from pathlib import Path
 import time
 
 
@@ -67,6 +65,12 @@ def train_loop(model, criterion, optimizer, scheduler,
 
 
 if __name__ == '__main__':
+    from torch import nn, optim
+    from model_utils import lr_scheduler, restore_weights, save_model
+    from data_generator import SemanticSegmentationDataset
+    from evaluate import evaluate
+    from pathlib import Path
+
     # define parameters
     batch_size = 1
     shuffle = True
@@ -107,7 +111,6 @@ if __name__ == '__main__':
 
     # initialize training parameters
     # based on https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
-    from torch import nn, optim
     criterion = nn.CrossEntropyLoss()   # categorical crossentropy
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
     scheduler = optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_scheduler)
