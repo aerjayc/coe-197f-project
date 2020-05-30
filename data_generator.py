@@ -52,3 +52,36 @@ class SemanticSegmentationDataset(Dataset):
         
         return img_names
 
+if __name__ == '__main__':
+    data_dir = 'drinks/'
+    gt_fname = 'segmentation_train.npy'
+    images, labels = SemanticSegmentationDataset(data_dir, gt_fname, cuda=False)
+    images, labels = images.permute(1,2,0), labels.permute(1,2,0)
+
+    import matplotlib.pyplot as plt
+
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('Input image', fontsize=14)
+    plt.imshow(images[0])
+    plt.savefig("input_image.png", bbox_inches='tight')
+    plt.show()
+
+    labels = labels * 255
+    masks = labels[..., 1:]
+    bgs = labels[..., 0]
+
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('Semantic segmentation', fontsize=14)
+    plt.imshow(masks[0])
+    plt.savefig("segmentation.png", bbox_inches='tight')
+    plt.show()
+
+    shape = (bgs[0].shape[0], bgs[0].shape[1])
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('Background', fontsize=14)
+    plt.imshow(np.reshape(bgs[0], shape), cmap='gray', vmin=0, vmax=255)
+    plt.savefig("background.png", bbox_inches='tight')
+    plt.show()
