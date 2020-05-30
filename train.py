@@ -122,3 +122,6 @@ if __name__ == '__main__':
 
     # evaluation
     m_iou, m_pla = evaluate(model, testloader)
+
+    # sample results
+    show_sample_segmentation(model, testloader)
