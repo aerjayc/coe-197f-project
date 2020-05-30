@@ -3,6 +3,7 @@ from model import fcn
 from model_utils import lr_scheduler, restore_weights, save_model
 from evaluate import evaluate
 from pathlib import Path
+import time
 
 
 def build_model(input_shape=(1, 3, 480, 640),
@@ -23,6 +24,7 @@ def build_model(input_shape=(1, 3, 480, 640),
 
 def train_loop(model, criterion, optimizer, scheduler,
                epochs=100, epoch_start=0, T_print=200, T_save=10):
+    T_start = time.time()
     for epoch in range(epoch_start, epochs):
         running_loss = 0.0
         running_loss_mini = 0.0
@@ -34,7 +36,7 @@ def train_loop(model, criterion, optimizer, scheduler,
             outputs = model(inputs)
 
             # remove the channel dimension
-            targets = torch.argmax(targets, axis=1) # convert to (N, H, W)
+            targets = torch.argmax(targets, dim=1) # convert to (N, H, W)
 
             loss = criterion(outputs, targets)
             loss.backward()
@@ -44,19 +46,24 @@ def train_loop(model, criterion, optimizer, scheduler,
             running_loss_mini += loss.item()
 
             if i % T_print == T_print-1:
-                print('%d-th minibatch\tloss: ' % (i+1, running_loss/T_print))
+                T_end = time.time()
+                print('%d-th minibatch\tloss: %f' % (i+1, running_loss/T_print), end='\t')
+                print(T_end-T_start, 'secs elapsed')
                 running_loss_mini = 0.0
 
         # call scheduler every epoch
         scheduler.step()
 
         # print statistics
+        T_end = time.time()
         print('epoch %3d\tloss: %f' % (epoch + 1, running_loss))
+        print(T_end-T_start, 'secs elapsed')
 
         # save
         if epoch % T_save == T_save-1:
-            weight_fname = f'resnet_v2-{epoch+1}epoch.pth'
-            save_model(model, weights_dir, weight_fname)
+            save_model(model, weights_dir, weight_fname
+
+    print("Done!")
 
 
 if __name__ == '__main__':
