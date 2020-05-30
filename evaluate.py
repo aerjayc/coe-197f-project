@@ -86,8 +86,9 @@ def to_categorical(tensor, n_classes=None, batched=True):
     
 def segment_objects(model, images, n_classes=4):
     # image should be output by DataLoader
-    images = Variable(images, volatile=True)    # to reduce memory usage
-    outputs = model(images).cpu().detach()
+    with torch.no_grad():
+        outputs = model(images).cpu().detach()
+
     segmentation = to_categorical(outputs, n_classes=n_classes)
 
     return segmentation # boolean mask of shape (N,C,H,W)
@@ -138,7 +139,7 @@ def show_sample_segmentation(model, testloader):
     plt.imshow(gt[0,1:,:,:].permute(1,2,0).cpu()*255)
     plt.show()
 
-    semgentation = segment_objects(model, img)
+    segmentation = segment_objects(model, img)
     del img
     torch.cuda.empty_cache()
 
