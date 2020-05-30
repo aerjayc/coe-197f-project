@@ -93,7 +93,7 @@ def segment_objects(model, images, n_classes=4):
 
     return segmentation # boolean mask of shape (N,C,H,W)
 
-def evaluate(model, testloader, max_n_test=None, T_print=1):
+def evaluate(model, testloader, max_n_test=None, T_print=None):
     s_iou = 0
     s_pla = 0
     # evaluate iou per test image
@@ -111,7 +111,7 @@ def evaluate(model, testloader, max_n_test=None, T_print=1):
         del segmentation
         torch.cuda.empty_cache()
 
-        if i % T_print == T_print-1:
+        if T_print and (i % T_print == T_print-1):
             print('%d) IoU = %f\tpla = %f' % (i, s_iou / (i+1), s_pla / (i+1)))
 
         if max_n_test:
