@@ -29,7 +29,7 @@ def get_iou(gts, segmentation, n_classes=4):
     return i_iou
 
 def get_pla(gts, segmentation):
-    return 100 * (gts.cpu() == segmentation.cpu().detach()).all(axis=1).float().mean()
+    return 100 * (gts.cpu() == segmentation.cpu().detach()).all(dim=1).float().mean()
 
 def get_batch_iou(gts, segmentation, n_classes=4):
     s_iou = 0
@@ -91,7 +91,7 @@ def segment_objects(model, images, n_classes=4):
 
     segmentation = to_categorical(outputs, n_classes=n_classes)
 
-    return segmentation.long() # mask of shape (N,C,H,W)
+    return segmentation # boolean mask of shape (N,C,H,W)
 
 def evaluate(model, testloader, max_n_test=None, T_print=None):
     s_iou = 0
