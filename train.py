@@ -1,6 +1,8 @@
+import torch
 from model_utils import restore_weights, save_model
 from resnet import build_resnet
 from model import fcn
+from evaluate import show_sample_segmentation
 import time
 
 
@@ -20,7 +22,7 @@ def build_model(input_shape=(1, 3, 480, 640),
 
     return model, backbone
 
-def train_loop(model, criterion, optimizer, scheduler,
+def train_loop(model, criterion, optimizer, scheduler, trainloader,
                epochs=100, epoch_start=0, T_print=200, T_save=10):
     T_start = time.time()
     for epoch in range(epoch_start, epochs):
@@ -59,13 +61,14 @@ def train_loop(model, criterion, optimizer, scheduler,
 
         # save
         if epoch % T_save == T_save-1:
-            save_model(model, weights_dir, weight_fname
+            save_model(model, weights_dir, weight_fname)
 
     print("Done!")
 
 
 if __name__ == '__main__':
     from torch import nn, optim
+    from torch.utils.data import DataLoader
     from model_utils import lr_scheduler, restore_weights, save_model
     from data_generator import SemanticSegmentationDataset
     from evaluate import evaluate
