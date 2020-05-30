@@ -9,7 +9,7 @@ def get_iou(gts, segmentation, n_classes=4):
     eps = np.finfo(float).eps   # minimum positive float value
     for i in range(n_classes):
         gt = gts[i,:,:].cpu().numpy()
-        segmentation = segmentation[i,:,:].cpu().detach().numpy()
+        mask = segmentation[i,:,:].cpu().detach().numpy()
         # skip current class if it doesn't appear in image
         if np.sum(gt) < eps:
             continue
@@ -30,7 +30,9 @@ def get_iou(gts, segmentation, n_classes=4):
     return i_iou
 
 def get_pla(gts, segmentation):
-    return 100 * (gts.cpu() == segmentation.cpu().detach()).all(dim=1).float().mean()
+    gts = gts.cpu().numpy()
+    segmentation = segmentation.cpu().detach().numpy()
+    return 100 * (gts == segmentation).all(axis=1).astype('float').mean()
 
 def get_batch_iou(gts, segmentation, n_classes=4):
     s_iou = 0
@@ -144,7 +146,7 @@ def show_sample_segmentation(model, testloader):
     del img
     torch.cuda.empty_cache()
 
-    plt.imshow(segmentation[0,1:,:,:].permute(1,2,0)*255)
+    plt.imshow(segmentation[0,1:,:,:].permute(1,2,0).numpy()*255)
     plt.show()
 
     iou = get_iou(gt[0], segmentation[0])
