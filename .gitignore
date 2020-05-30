@@ -7,3 +7,7 @@ drinks/
 
 # model
 weights/
+
+# notebooks
+*.ipynb
+!197F_project.py
