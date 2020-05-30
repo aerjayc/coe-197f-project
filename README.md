@@ -58,7 +58,9 @@ The derivation of these results can be seen in the jupyter notebook.
 ### Image / Ground Truth / Output 1
 
 IoU: `0.7417`
-PLA: `66.68%`
+PLA: `66.68%`  
+
+
 ![Image 1](images/img1.png)
 ![Ground Truth 1](images/gt1.png)
 ![Segmentation 1](images/seg1.png)
@@ -67,7 +69,9 @@ PLA: `66.68%`
 ### Image / Ground Truth / Output 2
 
 IoU: `0.8142`
-PLA: `72.73%`
+PLA: `72.73%`  
+
+
 ![Image 2](images/img2.png)
 ![Ground Truth 2](images/gt2.png)
 ![Segmentation 2](images/seg2.png)
@@ -76,7 +80,9 @@ PLA: `72.73%`
 ### Image / Ground Truth / Output 3
 
 IoU: `0.7961`
-PLA: `62.23%`
+PLA: `62.23%`  
+
+
 ![Image 3](images/img3.png)
 ![Ground Truth 3](images/gt3.png)
 ![Segmentation 3](images/seg3.png)
