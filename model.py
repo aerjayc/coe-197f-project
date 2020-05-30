@@ -134,7 +134,7 @@ class fcn(nn.Module):
         # 'he_normal' initialization
         nn.init.kaiming_normal_(self.conv_transpose.weight)
 
-        self.logsoftmax = nn.LogSoftmax()
+        self.logsoftmax = nn.LogSoftmax(dim=1)
     
 
     def forward(self, x):
