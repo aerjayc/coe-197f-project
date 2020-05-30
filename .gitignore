@@ -6,7 +6,8 @@ drinks/
 *.gz
 
 # model
-weights/
+weights/*
+!weights/resnet_v2-300epoch.pth
 
 # notebooks
 *.ipynb
